@@ -1,18 +1,18 @@
 package config
 
 import (
-	"database/sql"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var DB *sql.DB
+var DB *gorm.DB
 
 func ConnectDB() {
-	var err error
 	dsn := "root:root@tcp(localhost:3306)/bankdb"
-	DB, err = sql.Open("mysql", dsn)
+	var err error
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to DB:", err)
 	}
